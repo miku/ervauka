@@ -1,0 +1,8 @@
+ervauka:
+  image: node:0.10
+  ports:
+    - "3000:3000"
+  volumes:
+    - "./:/app"
+  working_dir: /app
+  command: node ./bin/www
