@@ -1,5 +1,6 @@
-"use strict"
+"use strict";
 
+var debug = require('debug')('apiv1');
 var express = require('express');
 var router = express.Router();
 var rvk = require('../lib/rvk');
@@ -49,9 +50,19 @@ router.get('/', function (req, res) {
  * 		"status":"OK"
  * 	}
  */
-router.get('/getchilds/:id/:depth?', function(req, res) {
-	console.log(req.params.id);
-	res.send(rvk.getChildTree(req.params.id, 0));
+router.get('/getchilds', function(req, res, next) {
+	var id = (!req.query.notation_id || req.query.notation_id === 'null') ? undefined : req.query.notation_id;
+	var depth = parseInt(req.query.depth) || 0;
+
+	rvk.getChildTree(id, depth).then(function(data) {
+		res.send({
+			data: data,
+			status: 'OK'
+		});
+	}, function(err) {
+		next(err);
+	});
+
 });
 
 

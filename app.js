@@ -1,6 +1,8 @@
-"use strict"
+"use strict";
 
+var debug = require('debug')('main');
 var express = require('express');
+var cors = require('cors');
 var path = require('path');
 // "serve-favicon": "~2.2.0"
 //var favicon = require('serve-favicon');
@@ -14,7 +16,8 @@ var cookieParser = require('cookie-parser');
 // "body-parser": "~1.10.0",
 var bodyParser = require('body-parser');
 
-var api = require('./routes/api');
+var apiv1 = require('./routes/apiv1');
+var apiv2 = require('./routes/apiv2');
 
 var rvk = require('./lib/rvk');
 
@@ -27,8 +30,8 @@ var app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
+app.use(cors());
 //app.use(favicon(__dirname + '/public/img/favicon.ico'));
-
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
@@ -37,8 +40,8 @@ app.use(bodyParser.urlencoded({
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/doc', express.static(path.join(__dirname, 'apidoc')));
-app.use('/api/v1', api);
-
+app.use('/api/v1', apiv1);
+app.use('/api/v2', apiv2);
 app.get('/', function(req, res, next) {
 	res.redirect('/doc');
 })
@@ -57,11 +60,7 @@ app.use(function (req, res, next) {
 if (app.get('env') === 'development') {
 	app.use(function (err, req, res, next) {
 		res.status(err.status || 500);
-		res.render('error', {
-			message: err.message,
-			error: err,
-			title: 'error'
-		});
+		res.send(err.toString());
 	});
 }
 
@@ -69,11 +68,7 @@ if (app.get('env') === 'development') {
 // no stacktraces leaked to user
 app.use(function (err, req, res, next) {
 	res.status(err.status || 500);
-	res.render('error', {
-		message: err.message,
-		error: {},
-		title: 'error'
-	});
+	res.send(err.message);
 });
 
 module.exports = app;

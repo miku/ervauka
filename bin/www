@@ -1,5 +1,7 @@
 #!/usr/bin/env node
-var debug = require('debug')('expressapp');
+"use strict";
+
+var debug = require('debug')('server');
 var app = require('../app');
 
 app.set('port', process.env.PORT || 3000);
