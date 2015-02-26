@@ -5,4 +5,6 @@ ervauka:
   volumes:
     - "./:/app"
   working_dir: /app
-  command: node ./bin/www
+  command: npm start
+  environment:
+    - "URI=https://speicherwolke.uni-leipzig.de/public.php?service=files&t=65da0cd17ebba83085a69ba263502fea&download"

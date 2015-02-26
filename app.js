@@ -1,5 +1,6 @@
 "use strict";
 
+var process = require('process');
 var debug = require('debug')('main');
 var express = require('express');
 var cors = require('cors');
@@ -21,8 +22,10 @@ var apiv2 = require('./routes/apiv2');
 
 var rvk = require('./lib/rvk');
 
-//rvk.importXml('https://speicherwolke.uni-leipzig.de/public.php?service=files&t=65da0cd17ebba83085a69ba263502fea&download');
-rvk.importXml('file:///home/seltmann/projects/nodejs/ervauka/rvk.xml');
+var uri = process.env.URI ||
+	process.argv[2];
+
+rvk.importXml(uri);
 
 var app = express();
 
