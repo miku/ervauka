@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="yes"?>
+<classification_scheme root_name="RVKO">
+	<node notation="A" benennung="Allgemeines">
+		<children>
+			<node notation="AA"
+				  benennung="Bibliographien der Bibliographien, Universalbibliographien, Bibliothekskataloge, Nationalbibliographien">
+				<children>
+					<node notation="AA 09900" benennung="Bibliographische Zeitschriften">
+						<content bemerkung="Erläuterungen zur Notationsvergabe s. RVK-Online - Informationen">
+						</content>
+						<register>Bibliographie / Zeitschrift
+						</register>
+					</node>
+					<node notation="AA 10000 - AA 19900" benennung="Bibliographien der Bibliographien">
+						<content bemerkung="(aber nicht Bibliographien der Länder- und Fachbibliographien)">
+						</content>
+						<register>Bibliographie / Bibliographie
+						</register>
+						<children>
+							<node notation="AA 10000" benennung="International, Allgemeines">
+							</node>
+							<node notation="AA 10100" benennung="Antike Welt">
+							</node>
+							<node notation="AA 10300" benennung="Ländergruppen/Entwicklungsländer">
+							</node>
+							<node notation="AA 10400" benennung="Westliche Welt, Abendland, Europäische Welt">
+								<children>
+									<node notation="AA 10500" benennung="Germanischer Kulturkreis">
+									</node>
+								</children>
+							</node>
+							<node notation="AA 10600" benennung="Europa">
+								<children>
+									<node notation="AA 10640"
+										  benennung="Europäische Gemeinschaften, Europäische Union">
+									</node>
+									<node notation="AA 10700" benennung="Mitteleuropa">
+										<children>
+											<node notation="AA 10720" benennung="Alpenländer">
+											</node>
+											<node notation="AA 10760" benennung="Österreich-Ungarische Monarchie">
+											</node>
+											<node notation="AA 10800" benennung="Deutsches Sprachgebiet">
+											</node>
+											<node notation="AA 10900"
+												  benennung="Deutsche im Ausland, deutsche Kultur im Ausland">
+											</node>
+										</children>
+									</node>
+								</children>
+							</node>
+						</children>
+					</node>
+				</children>
+			</node>
+		</children>
+	</node>
+</classification_scheme>
