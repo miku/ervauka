@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+	<meta charset="UTF-8">
+	<title>Example RVK Tree</title>
+	<link rel="stylesheet" type="text/css" href="/ervauka.css"></head>
+<body>
+<div class="searchHomeBrowse">
+	<h2 style="">eRVauKa</h2>
+	Baum:<input type="radio" name="browsetype" value="tree" checked="checked"/>
+	Flach:<input type="radio"
+				 name="browsetype"
+				 value="slide"/><br>
+
+	<div class="rvk-breadcrumbline" id="rvk-breadcrumb"></div>
+	<form method="get" action="" name="searchForm" id="searchForm">
+		<input type="hidden" name="notation" id="rvk-notation" value=""/>
+		<input type="hidden" name="xpath" id="rvk-xpath" value=""/>
+		<input style="float:right" type="submit" name="submit" value="anzeigen"/>
+	</form>
+	<div class="rvkSearchContent" style="clear:both">
+		<div id="rvk-tree">
+		</div>
+	</div>
+</div>
+<script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
+<script src="//code.jquery.com/ui/1.11.3/jquery-ui.js"></script>
+<script type="text/javascript" src="/ervauka.js"></script>
+<script>
+	Rvk.setConfig({
+		speed: 200,
+		json: {
+			func: rvk_init,
+			url: "/api/v1/getchilds",
+			params: {
+				depth: 0
+			}
+		},
+		open: getParameterByName('xpath'),
+		eventType: "click",
+		eventHandler: toggle,
+		root: '#rvk-tree',
+		breadcrumbroot: '#rvk-breadcrumb'
+	});
+
+	$('input[name="browsetype"]').click(function () {
+		Rvk.init($(this).val());
+	});
+
+	Rvk.init($('input[name="browsetype"][checked="checked"]').val());
+
+	/**
+	 * used to find get-parameter 'xpath' which indicates where to start from
+	 *
+	 * see http://stackoverflow.com/questions/901115/how-can-i-get-query-string-values-in-javascript/21152762#21152762
+	 * @param xpath
+	 */
+	function getParameterByName(name) {
+		name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+		var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+			results = regex.exec(location.search);
+		return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+	}
+
+	/**
+	 * sets the notation data to the specified elements
+	 *
+	 * @param data
+	 */
+	function toggle(data) {
+		$("#rvk-notation").val('"'+data.notation+'"');
+		$("#rvk-xpath").val(data.id);
+	}
+
+</script>
+</body>
+</html>

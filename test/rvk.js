@@ -1,11 +1,13 @@
 "use strict";
 
-var chai = require('chai');
-var chaiAsPromised = require('chai-as-promised');
+//var chai = require('chai');
+//var chaiAsPromised = require('chai-as-promised');
 
-chai.use(chaiAsPromised);
+//chai.use(chaiAsPromised);
 
-var should = chai.should();
+//var should = chai.should();
+
+var should = require('should');
 
 describe('Rvk', function () {
 	describe('#importXml', function () {
@@ -14,54 +16,51 @@ describe('Rvk', function () {
 			rvk.importXml('file://' + __dirname + '/rvk.xml');
 		})
 	});
-	describe('#getChildTree', function () {
-		var rvk = require('../lib/rvk');
+	describe('#getChildTree (flat)', function () {
+		var rvk = require('../lib/rvk'),
+			result;
 		rvk.importXml('file://' + __dirname + '/rvk.xml');
 
-		it('should return correct values', function (done) {
-
-			rvk.getChildTree('A', 0).should.eventually.equal('foo');
-
-
-				/*
-				then(function (data) {
-						data.should.have.length(1);
-						data[0].id.should.be.exactly('AA');
-						data[0].notation.should.be.exactly('AA');
-						data[0].title.should.be.exactly('Bibliographien der Bibliographien, Universalbibliographien, Bibliothekskataloge, Nationalbibliographien');
-						data[0].hasChildren.should.be.exactly(1);
-						data[0].children.should.be.instanceof(typeof []);
-						done();
-					} catch (err) {
-						should.not.exist(err);
-						done();
-					}
-				},
-				function (err) {
-					should.not.exist(err);
-					done();
-				}); */
+		beforeEach(function (done) {
+			rvk.getChildTree('/classification_scheme/node[@notation=\'A\']', 0).then(function (data) {
+				result = data;
+				done();
+			},function(err) {
+				result = err;
+				done();
+			})
 		});
-		it('should return 2 level tree', function (done) {
-			rvk.getChildTree('A', 1).then(function (data) {
-					try {
-						should.not.exist(data);
-						data.length.should.exactly(1);
-						data[0].id.should.exactly('AA');
-						data[0].notation.should.exactly('AA');
-						data[0].title.should.exactly('Bibliographien der Bibliographien, Universalbibliographien, Bibliothekskataloge, Nationalbibliographien');
-						data[0].hasChildren.should.exactly(1);
-						data[0].children.should.be([]);
-						done();
-					} catch (err) {
-						should.not.exist(err);
-						done();
-					}
-				},
-				function (err) {
-					should.not.exist(err);
-					done();
-				});
-		})
-	})
+		it('should return correct values', function () {
+			result.should.have.length(1);
+			result[0].id.should.be.exactly('/classification_scheme/node[@notation=\'A\']/children/node[@notation=\'AA\']');
+			result[0].notation.should.be.exactly('AA');
+			result[0].title.should.be.exactly('Bibliographien der Bibliographien, Universalbibliographien, Bibliothekskataloge, Nationalbibliographien');
+			result[0].hasChildren.should.be.exactly(1);
+			result[0].children.should.be.Array;
+		});
+	});
+
+	describe('#getChildTree (multidimensional)', function () {
+		var rvk = require('../lib/rvk'),
+			result;
+		rvk.importXml('file://' + __dirname + '/rvk.xml');
+
+		beforeEach(function (done) {
+			rvk.getChildTree('/classification_scheme/node[@notation=\'A\']', 1).then(function (data) {
+				result = data;
+				done();
+			},function(err) {
+				result = err;
+				done();
+			})
+		});
+		it('should return 2 level tree', function () {
+			result.should.have.length(1);
+			result[0].id.should.be.exactly('/classification_scheme/node[@notation=\'A\']/children/node[@notation=\'AA\']');
+			result[0].notation.should.exactly('AA');
+			result[0].title.should.exactly('Bibliographien der Bibliographien, Universalbibliographien, Bibliothekskataloge, Nationalbibliographien');
+			result[0].hasChildren.should.exactly(1);
+			result[0].children.should.be.Array;
+		});
+	});
 });

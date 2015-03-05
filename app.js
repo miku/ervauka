@@ -45,6 +45,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/doc', express.static(path.join(__dirname, 'apidoc')));
 app.use('/api/v1', apiv1);
 app.use('/api/v2', apiv2);
+
 app.get('/', function(req, res, next) {
 	res.redirect('/doc');
 })

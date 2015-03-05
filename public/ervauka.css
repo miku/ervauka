@@ -1,0 +1,39 @@
+/*UL.jqueryFileTree {*/
+/*font-family: Verdana, sans-serif;*/
+/*font-size: 11px;*/
+/*line-height: 18px;*/
+/*padding: 0px;*/
+/*margin: 0px;*/
+/*}*/
+
+UL.jqueryFileTree LI {
+	list-style: none;
+	padding: 0px;
+	padding-left: 20px;
+	margin: 0px;
+}
+
+UL.jqueryFileTree A {
+	display: block;
+	padding: 0px 20px;
+	background-position:left top;
+	background-repeat:no-repeat;
+}
+
+UL.jqueryFileTree A.active {
+	background-color: #eaedf0;
+}
+DIV.rvk-breadcrumbline {
+	float:left;
+}
+
+DIV.rvk-breadcrumb {
+	display:inline;
+}
+
+/* Core Styles */
+.jqueryFileTree LI.expanded A { background-image: url(images/minus.gif); }
+.jqueryFileTree LI.collapsed A { background-image: url(images/plus.gif); }
+.jqueryFileTree LI.file A { background-image: url(images/article-icon.png); }
+.jqueryFileTree LI.wait A { background-image: url(images/ajax_loading.gif); }
+/* File Extensions*/
