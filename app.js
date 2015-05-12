@@ -5,6 +5,8 @@ var debug = require('debug')('main');
 var express = require('express');
 var cors = require('cors');
 var path = require('path');
+var session = require('express-session');
+
 // "serve-favicon": "~2.2.0"
 //var favicon = require('serve-favicon');
 
@@ -41,6 +43,10 @@ app.use(bodyParser.urlencoded({
 	extended: true
 }));
 app.use(cookieParser());
+app.use(session({
+	rolling: true,
+	secret: 'changeit'
+}));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/doc', express.static(path.join(__dirname, 'apidoc')));
 app.use('/api/v1', apiv1);

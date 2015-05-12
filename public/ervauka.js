@@ -10,11 +10,12 @@ Rvk = (function ($) {
 		eventType: 'click',
 		root: '#rvk-tree',
 		breadcrumbroot: '#rvk-breadcrumb',
+		notationsToHide: []
 	};
 
 	active = {
 		id: null,
-		notation: null,
+		notation: null
 	};
 
 	var _parseOpenXpath = function (xpath) {
@@ -48,6 +49,8 @@ Rvk = (function ($) {
 		config.root = $(config.root);
 		config.breadcrumbroot = $(config.breadcrumbroot);
 
+		Session.init();
+
 		if (type == 'slide') {
 			Slide.init();
 		} else {
@@ -56,6 +59,25 @@ Rvk = (function ($) {
 
 		Breadcrumb.init();
 	};
+
+	var Session = (function() {
+
+		var _init = function() {
+			parser = document.createElement('a');
+			parser.href = Rvk.config.json.url;
+
+			parser.pathname = 'api/v1/initSession';
+			console.log(parser.href);
+
+			$.getJSON(parser.href, {notationsToHide: Rvk.config.notationsToHide}).done(function(data) {
+				console.log(data);
+			})
+		};
+
+		return {
+			init: _init
+		};
+	})();
 
 	var Breadcrumb = (function () {
 
@@ -103,7 +125,7 @@ Rvk = (function ($) {
 		return {
 			add: _add,
 			remove: _remove,
-			init: _init,
+			init: _init
 		};
 	})();
 

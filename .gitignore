@@ -1,2 +1,5 @@
-node_modules/
-apidoc
+/node_modules
+/apidoc
+/.idea
+/html-report
+/coverage
