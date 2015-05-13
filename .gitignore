@@ -1,5 +1,6 @@
-/node_modules
-/apidoc
-/.idea
-/html-report
-/coverage
+node_modules/
+apidoc
+rvk.xml
+.idea
+coverage
+html-report

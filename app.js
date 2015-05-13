@@ -27,6 +27,8 @@ var rvk = require('./lib/rvk');
 var uri = process.env.URI ||
 	process.argv[2];
 
+var pathRoot = process.env.VIRTUAL_PATH || '';
+
 rvk.importXml(uri);
 
 var app = express();
@@ -47,13 +49,13 @@ app.use(session({
 	rolling: true,
 	secret: 'changeit'
 }));
-app.use(express.static(path.join(__dirname, 'public')));
-app.use('/doc', express.static(path.join(__dirname, 'apidoc')));
-app.use('/api/v1', apiv1);
-app.use('/api/v2', apiv2);
+app.use(pathRoot, express.static(path.join(__dirname, 'public')));
+app.use(pathRoot + '/doc', express.static(path.join(__dirname, 'apidoc')));
+app.use(pathRoot + '/api/v1', apiv1);
+app.use(pathRoot + '/api/v2', apiv2);
 
-app.get('/', function(req, res, next) {
-	res.redirect('/doc');
+app.get(pathRoot + '/', function(req, res, next) {
+	res.redirect(pathRoot + '/doc');
 })
 /// catch 404 and forward to error handler
 app.use(function (req, res, next) {
