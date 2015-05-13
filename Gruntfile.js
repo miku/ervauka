@@ -57,7 +57,16 @@ module.exports = function (grunt) {
 				src:'routes/',
 				dest: 'apidoc/'
 			}
-		}
+		},
+        docker_io: {
+            options: {
+                dockerFileLocation: '.',
+                buildName: 'useltmann/ervauka',
+                tag: 'latest',
+                username: 'useltmann',
+                push: false
+            }
+        }
 	});
 
 	grunt.config.requires('watch.server.files');
