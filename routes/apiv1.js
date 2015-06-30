@@ -4,7 +4,6 @@ var debug = require('debug')('apiv1');
 var express = require('express');
 var router = express.Router();
 var rvk = require('../lib/rvk');
-
 /**
  * @api 		{get} 	/api/v1/ Basic information about the api
  * @apiName 	v1

@@ -1,9 +1,8 @@
 FROM node:latest
 MAINTAINER seltmann@ub.uni-leipzig.de
-COPY . /app
-RUN cd /app; npm install
+RUN npm set registry http://docker.ub.intern.uni-leipzig.de/npm \
+ && npm install -g ervauka
 EXPOSE 3000
 ENV NODE_ENV=staging
 ENV URI=file:///app/test/rvk.xml
-RUN chmod a+x /app/bin/www
-CMD ["/app/bin/www"]
+CMD ["ervauka"]

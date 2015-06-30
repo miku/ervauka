@@ -5,6 +5,8 @@ var debug = require('debug')('main');
 var express = require('express');
 var cors = require('cors');
 var path = require('path');
+var session = require('express-session');
+
 // "serve-favicon": "~2.2.0"
 //var favicon = require('serve-favicon');
 
@@ -25,8 +27,6 @@ var rvk = require('./lib/rvk');
 var uri = process.env.URI ||
 	process.argv[2];
 
-var pathRoot = process.env.VIRTUAL_PATH || '';
-
 rvk.importXml(uri);
 
 var app = express();
@@ -43,14 +43,15 @@ app.use(bodyParser.urlencoded({
 	extended: true
 }));
 app.use(cookieParser());
-app.use(pathRoot, express.static(path.join(__dirname, 'public')));
-app.use(pathRoot + '/doc', express.static(path.join(__dirname, 'apidoc')));
-app.use(pathRoot + '/api/v1', apiv1);
-app.use(pathRoot + '/api/v2', apiv2);
+app.use(session({
+	rolling: true,
+	secret: 'changeit'
+}));
+app.use(express.static(path.join(__dirname, 'public')));
+app.use('/doc', express.static(path.join(__dirname, 'apidoc')));
+app.use('/api/v1', apiv1);
+app.use('/api/v2', apiv2);
 
-app.get(pathRoot + '/', function(req, res, next) {
-	res.redirect(pathRoot + '/doc');
-})
 /// catch 404 and forward to error handler
 app.use(function (req, res, next) {
 	var err = new Error('Not Found');

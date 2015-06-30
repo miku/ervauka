@@ -1,6 +1,5 @@
 node_modules/
 apidoc
-rvk.xml
 .idea
 coverage
 html-report

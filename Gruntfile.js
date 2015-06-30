@@ -1,7 +1,7 @@
 'use strict';
 
 var request = require('request');
-
+var path = require('path');
 module.exports = function (grunt) {
 	// show elapsed time at the end
 	require('time-grunt')(grunt);
@@ -12,9 +12,12 @@ module.exports = function (grunt) {
 
 	grunt.initConfig({
 		pkg: grunt.file.readJSON('package.json'),
+		path: path.resolve('./'),
 		develop: {
 			server: {
-				file: 'bin/www'
+				file: 'bin/www',
+				args: 'file://<%= path %>/test/rvk.xml',
+				env: { DEBUG: '*,-express*' }
 			}
 		},
 		watch: {
