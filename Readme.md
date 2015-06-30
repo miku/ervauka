@@ -7,44 +7,60 @@ by the University of Regensburg
 
 for further information read [here][1]
 
-## Installation
+## Prerequisites
 
 ### nodejs
 
 The application is written in JavaScript and makes use of [nodejs][2]. So first you have to install this peace of software.
 Please refer to the projects documentation on how to do this for your running operating system.
 
-### source code
+## Installation
+
+### via source code
 
 the project is open source and therefore hosted on [github.com][3]. To checkout type
  
-		git clone https://github.com/
+	git clone https://github.com/
 
-### install dependencies
+#### install dependencies
 
 change into the applications folder and type
 
-		npm install
-		
-## start the service
+	npm install
+
+#### start the service
 
 to start with local copy of the xml file type
 
-		node bin/www file:///path/to/rvk.xml
-		
+	node bin/ervauka file:///path/to/rvk.xml
+
+### via npm
+
+in order to install via node's package manager [npm][4] you need access to the [UBL's package registry][5].
+as root do 
+
+	npm --registry http://docker.ub.intern.uni-leipzig.de/npm/ install -g ervauka
+
+#### start the service
+
+to start the service type
+
+	ervauka file:///path/to/rvk.xml
+
+## provide the service with the RVK-XML
+
+to start with local copy of the xml file type
+
+	ervauka file:///path/to/rvk.xml
+
 or with a remote location accessable with http or https type
 
-		node bin/www http://remote.host/providing/rvk.xml
+	ervauka http://remote.host/providing/rvk.xml
 
 alternatively you can provide the location by an environment variable 'URI'
 
-		URI=file://$(pwd)/rvk.xml node bin/www
-		 
-		 
-[1]: http://rvk.uni-regensburg.de/
-[2]: http://nodejs.org/
-[3]: https://github.com/finc
-
+	URI=file://$(pwd)/rvk.xml ervauka
+ 
 ## integrate into website
 
 to use this service in your website and you have to set up your html-code as follows
@@ -52,7 +68,7 @@ to use this service in your website and you have to set up your html-code as fol
  * add jquery
  * add jquery-ui
  * add ervauka.js, eg localhost:3000/ervauka.js
- * add script initiation accordingly to localhost:3000/example.html
+ * add script initiation accordingly to localhost:3000/index.html
 
 		var options = {
 			speed: 200, 					# optional, the milliseconds for animation effects
@@ -71,3 +87,11 @@ to use this service in your website and you have to set up your html-code as fol
 		}
 	
 		Rvk.setConfig(options)
+
+
+[1]: http://rvk.uni-regensburg.de/
+[2]: http://nodejs.org/
+[3]: https://github.com/finc
+[4]: https://www.npmjs.com/
+[5]: http://docker.ub.intern.uni-leipzig.de/npm/
+

@@ -1,6 +1,6 @@
 {
   "name": "ervauka",
-  "version": "0.0.0",
+  "version": "0.0.2",
   "description": "RVK Hierarchy Browser JSON-API and HTML-Widget",
   "main": "app.js",
   "dependencies": {
@@ -33,20 +33,22 @@
     "should-promised": "^0.1.0",
     "time-grunt": "~1.0.0"
   },
-  "private": true,
   "scripts": {
-    "start": "node ./bin/www",
-    "test": "mocha"
+    "start": "node ./bin/ervauka",
+    "test": "mocha --reporter xunit >xunit.xml"
+  },
+	"bin": {
+    "ervauka": "./bin/ervauka"
   },
   "repository": {
     "type": "git",
-    "url": "ssh://git@git.ub.uni-leipzig.de:ervauka"
+    "url": "ssh://git@git.ub.intern.uni-leipzig.de/ervauka.git"
   },
   "keywords": [
     "rvk",
     "notation",
     "regensburg"
   ],
-  "author": "Ulf Seltmann",
+  "author": "Ulf Seltmann <seltmann@ub.uni-leipzig.de",
   "license": "GPL"
 }
