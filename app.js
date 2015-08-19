@@ -14,7 +14,6 @@ var logger = require('morgan');
 var bodyParser = require('body-parser');
 
 var apiv1 = require('./routes/apiv1');
-var apiv2 = require('./routes/apiv2');
 
 var rvk = require('./lib/rvk');
 
@@ -56,9 +55,7 @@ app.use(session({
 	cookie: {secure: false}
 }));
 app.use(express.static(path.join(__dirname, 'public')));
-app.use('/doc', express.static(path.join(__dirname, 'apidoc')));
 app.use('/api/v1', apiv1);
-app.use('/api/v2', apiv2);
 
 /// catch 404 and forward to error handler
 app.use(function (req, res, next) {
