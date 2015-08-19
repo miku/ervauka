@@ -1,6 +1,7 @@
-Rvk = (function ($) {
+'use strict';
 
-	config = {
+var Rvk = (function ($) {
+	var config = {
 		speed: 200,
 		multiFolder: true,
 		loadMessage: 'Loading...',
@@ -13,7 +14,7 @@ Rvk = (function ($) {
 		notationsToHide: []
 	};
 
-	active = {
+	var active = {
 		id: null,
 		notation: null
 	};
@@ -49,28 +50,28 @@ Rvk = (function ($) {
 		config.root = $(config.root);
 		config.breadcrumbroot = $(config.breadcrumbroot);
 
-		Session.init();
+		Session.init(function(data) {
+			if (type == 'slide') {
+				Slide.init();
+			} else {
+				Tree.init();
+			}
 
-		if (type == 'slide') {
-			Slide.init();
-		} else {
-			Tree.init();
-		}
-
-		Breadcrumb.init();
+			Breadcrumb.init();
+		});
 	};
 
 	var Session = (function() {
 
-		var _init = function() {
-			parser = document.createElement('a');
+		var _init = function(cb) {
+			var parser = document.createElement('a');
 			parser.href = Rvk.config.json.url;
 
-			parser.pathname = 'api/v1/initSession';
+			parser.pathname = 'api/v1/init';
 			console.log(parser.href);
 
-			$.getJSON(parser.href, {notationsToHide: Rvk.config.notationsToHide}).done(function(data) {
-				console.log(data);
+			$.post(parser.href, {notationsToHide: Rvk.config.notationsToHide}).done(function(data) {
+				cb(data);
 			})
 		};
 
@@ -231,11 +232,11 @@ Rvk = (function ($) {
 		var _replaceList = function (id, direction) {
 			Rvk.config.json.func(id, Rvk.config.json.url, Rvk.config.json.params, function (data) {
 				if (direction == undefined) {
-					from = "right";
-					to = "left";
+					var from = "right";
+					var to = "left";
 				} else {
-					from = "left";
-					to = "right";
+					var from = "left";
+					var to = "right";
 				}
 
 				var ul = Rvk.config.root.find('ul');

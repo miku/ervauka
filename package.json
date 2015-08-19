@@ -31,13 +31,14 @@
     "mocha": "^2.1.0",
     "should": "^5.0.1",
     "should-promised": "^0.1.0",
+    "supertest": "^1.0.1",
     "time-grunt": "~1.0.0"
   },
   "scripts": {
     "start": "node ./bin/ervauka",
     "test": "mocha --reporter xunit >xunit.xml"
   },
-	"bin": {
+  "bin": {
     "ervauka": "./bin/ervauka"
   },
   "repository": {
