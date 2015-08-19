@@ -7,9 +7,6 @@ var cors = require('cors');
 var path = require('path');
 var session = require('express-session');
 
-// "serve-favicon": "~2.2.0"
-//var favicon = require('serve-favicon');
-
 // "morgan": "~1.5.0"
 var logger = require('morgan');
 
@@ -29,8 +26,24 @@ rvk.importXml(uri);
 var app = express();
 
 app.use(cors());
-//app.use(favicon(__dirname + '/public/img/favicon.ico'));
-app.use(logger('dev'));
+
+switch (app.get('env')) {
+	case 'test':
+		break;
+	case 'development':
+		app.use(logger('dev'));
+		app.use(function (err, req, res, next) {
+			res.status(err.status || 500);
+			res.send(err.toString());
+		});
+		break;
+	default:
+		app.use(logger('combined'));
+		app.use(function (err, req, res, next) {
+			res.status(err.status || 500);
+			res.send(err.message);
+		});
+}
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
 	extended: true
@@ -52,25 +65,6 @@ app.use(function (req, res, next) {
 	var err = new Error('Not Found');
 	err.status = 404;
 	next(err);
-});
-
-/// error handlers
-
-// development error handler
-// will print stacktrace
-
-if (app.get('env') === 'development') {
-	app.use(function (err, req, res, next) {
-		res.status(err.status || 500);
-		res.send(err.toString());
-	});
-}
-
-// production error handler
-// no stacktraces leaked to user
-app.use(function (err, req, res, next) {
-	res.status(err.status || 500);
-	res.send(err.message);
 });
 
 module.exports = app;

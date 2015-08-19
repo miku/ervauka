@@ -1,5 +1,4 @@
 node_modules/
-apidoc
 .idea
-coverage
-html-report
+xunit.xml
+coverage.html

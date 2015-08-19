@@ -17,7 +17,7 @@ module.exports = function (grunt) {
 			server: {
 				file: 'bin/www',
 				args: 'file://<%= path %>/test/rvk.xml',
-				env: { DEBUG: '*,-express*' }
+				env: { DEBUG: '*,-express*', NODE_ENV: 'development' }
 			}
 		},
 		watch: {
@@ -32,7 +32,7 @@ module.exports = function (grunt) {
 					'routes/*.js',
 					'Gruntfile.js'
 				],
-				tasks: ['apidoc', 'develop', 'delayed-livereload']
+				tasks: ['develop', 'delayed-livereload']
 			},
 			js: {
 				files: ['public/js/*.js'],
@@ -93,7 +93,6 @@ module.exports = function (grunt) {
 
 	grunt.registerTask('default', [
 		'develop',
-		'apidoc',
 		'watch'
 	]);
 };
