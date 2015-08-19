@@ -3,7 +3,8 @@
 var debug = require('debug')('apiv1');
 var express = require('express');
 var router = express.Router();
-var rvk = require('../lib/rvk');
+var query = require('../lib/rvk').Query;
+
 /**
  * @api 		{get} 	/api/v1/ Basic information about the api
  * @apiName 	v1
@@ -15,45 +16,12 @@ router.get('/', function (req, res) {
 		documentation: '/apidoc'});
 });
 
-/**
- * @api 		{get} 	/api/v1/getchilds/			 	returns the childs
- * @apiParam	{string} id 							the parent id
- * @apiParam	{number} [depth=0]						the depth
- * @apiName 	v1
- * @apiGroup 	generic
- * @apiSuccessExample {json} Success-Response:
- * 	{
- * 		"data": [
- * 			{
- * 				"id":"AA",
- * 				"notation":"AA",
- * 				"title":"Bibliographien der Bibliographien, Universalbibliographien, Bibliothekskataloge, Nationalbibliographien",
- * 				"hasChildren":"4",
- * 				"children":[]
- * 			},
- * 			{
- * 				"id":"AB",
- * 				"notation":"AB",
- * 				"title":"Verzeichnisse amtlicher Druckschriften, Hochschulschriften und Akademieschriften, Serienbibliographien und Zeitschriftenbibliographien",
- * 				"hasChildren":"4",
- * 				"children":[]
- * 			},
- * 			{
- * 				"id":"AC",
- * 				"notation":"AC",
- * 				"title":"Bibliographien und Kataloge besonderer Literaturgattungen",
- * 				"hasChildren":"11",
- * 				"children":[]
- * 			},
- * 		],
- * 		"status":"OK"
- * 	}
- */
 router.get('/getchilds', function(req, res, next) {
 	var id = (!req.query.notation_id || req.query.notation_id === 'null') ? undefined : req.query.notation_id;
 	var depth = parseInt(req.query.depth) || 0;
+	var notationsToHide = req.session.notationsToHide || [];
 
-	rvk.getChildTree(id, depth).then(function(data) {
+	query(notationsToHide).getChildTree(id, depth).then(function(data) {
 		res.send({
 			data: data,
 			status: 'OK'
@@ -64,6 +32,10 @@ router.get('/getchilds', function(req, res, next) {
 
 });
 
-
+router.post('/init', function(req, res, next) {
+	debug('init session');
+	req.session.notationsToHide = req.body.notationsToHide || [] ;
+	res.json(req.session.notationsToHide);
+});
 
 module.exports = router;

@@ -13,9 +13,6 @@ var session = require('express-session');
 // "morgan": "~1.5.0"
 var logger = require('morgan');
 
-// "cookie-parser": "~1.3.3",
-var cookieParser = require('cookie-parser');
-
 // "body-parser": "~1.10.0",
 var bodyParser = require('body-parser');
 
@@ -31,10 +28,6 @@ rvk.importXml(uri);
 
 var app = express();
 
-// view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
-
 app.use(cors());
 //app.use(favicon(__dirname + '/public/img/favicon.ico'));
 app.use(logger('dev'));
@@ -42,10 +35,12 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
 	extended: true
 }));
-app.use(cookieParser());
 app.use(session({
+	resave: false,
 	rolling: true,
-	secret: 'changeit'
+	secret: 'changeit',
+	saveUninitialized: false,
+	cookie: {secure: false}
 }));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/doc', express.static(path.join(__dirname, 'apidoc')));
