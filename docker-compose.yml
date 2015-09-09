@@ -1,4 +1,4 @@
-ervauka:
+nodejs:
   image: node:0.10
   ports:
     - "3000:3000"
@@ -8,3 +8,4 @@ ervauka:
   command: npm start
   environment:
     - "URI=https://speicherwolke.uni-leipzig.de/public.php?service=files&t=65da0cd17ebba83085a69ba263502fea&download"
+    - "DEBUG=*"

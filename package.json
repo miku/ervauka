@@ -1,6 +1,6 @@
 {
   "name": "ervauka",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "RVK Hierarchy Browser JSON-API and HTML-Widget",
   "main": "app.js",
   "dependencies": {

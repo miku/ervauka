@@ -5,20 +5,9 @@ var express = require('express');
 var router = express.Router();
 var query = require('../lib/rvk').Query;
 
-/**
- * @api 		{get} 	/api/v1/ Basic information about the api
- * @apiName 	v1
- * @apiGroup 	generic
- */
-router.get('/', function (req, res) {
-	res.send({
-		version: '1',
-		documentation: '/apidoc'});
-});
-
-router.get('/getchilds', function(req, res, next) {
-	var id = (!req.query.notation_id || req.query.notation_id === 'null') ? undefined : req.query.notation_id;
-	var depth = parseInt(req.query.depth) || 0;
+router.post('/getchilds', function(req, res, next) {
+	var id = (!req.body.notation_id || req.body.notation_id === 'null') ? undefined : req.body.notation_id;
+	var depth = parseInt(req.body.depth) || 0;
 	var notationsToHide = req.session.notationsToHide || [];
 
 	query(notationsToHide).getChildTree(id, depth).then(function(data) {

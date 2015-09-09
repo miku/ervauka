@@ -24,7 +24,12 @@ rvk.importXml(uri);
 
 var app = express();
 
-app.use(cors());
+app.use(cors(function(req, callback) {
+	callback(null, {
+		origin: true,
+		credentials: true
+	});
+}));
 
 switch (app.get('env')) {
 	case 'test':

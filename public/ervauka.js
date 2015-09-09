@@ -70,9 +70,17 @@ var Rvk = (function ($) {
 			parser.pathname = 'api/v1/init';
 			console.log(parser.href);
 
-			$.post(parser.href, {notationsToHide: Rvk.config.notationsToHide}).done(function(data) {
-				cb(data);
-			})
+			$.ajax({
+				type: 'POST',
+				url: parser.href,
+				xhrFields: {
+					withCredentials: true
+				},
+				crossDomain: true,
+				dataType: 'json',
+				data: {notationsToHide: Rvk.config.notationsToHide},
+				success: cb
+			});
 		};
 
 		return {
@@ -321,20 +329,29 @@ function rvk_init(id, url, params, process) {
 		params.notation_id = null
 	}
 
-	$.getJSON(url, params).done(function (data) {
-		var items = [];
-		var classes = "";
+	$.ajax({
+		type: 'POST',
+		url: url,
+		xhrFields: {
+			withCredentials: true
+		},
+		crossDomain: true,
+		dataType: 'json',
+		data: params,
+		success: function (data) {
+			var items = [];
+			var classes = "";
 
-		$.each(data.data, function (key, val) {
-			if (val.hasChildren > 0) {
-				classes = "directory collapsed"
-			} else {
-				classes = "file ext_txt"
-			}
+			$.each(data.data, function (key, val) {
+				if (val.hasChildren > 0) {
+					classes = "directory collapsed"
+				} else {
+					classes = "file ext_txt"
+				}
 
-			items.push('<li class="' + classes + '"><a href="#" rel="' + val.id + '"><span name="notation">' + val.notation + '</span> :: <span name="title">' + val.title + '</span></a></li>');
-		});
-
-		process('<ul class="jqueryFileTree" style="display:none">' + items.join('') + '</ul>', id)
-	})
+				items.push('<li class="' + classes + '"><a href="#" rel="' + val.id + '"><span name="notation">' + val.notation + '</span> :: <span name="title">' + val.title + '</span></a></li>');
+			});
+			process('<ul class="jqueryFileTree" style="display:none">' + items.join('') + '</ul>', id)
+		}
+	});
 }
