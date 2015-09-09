@@ -35,7 +35,11 @@ describe('session handling', function() {
 
 		it('should return only notation "AA 10000 - AA 19900"', function(done) {
 			agent
-				.post('/api/v1/getchilds?depth=0&notation_id=%2Fclassification_scheme%2Fnode%5B%40notation%3D%27A%27%5D%2Fchildren%2Fnode%5B%40notation%3D%27AA%27%5D')
+				.post('/api/v1/getchilds')
+				.send({
+					depth: '0',
+					notation_id: '/classification_scheme/node[@notation=\'A\']/children/node[@notation=\'AA\']'
+				})
 				.expect(200)
 				.end(function(err, res) {
 					if (err) return done(err);
