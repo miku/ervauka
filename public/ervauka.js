@@ -64,15 +64,9 @@ var Rvk = (function ($) {
 	var Session = (function() {
 
 		var _init = function(cb) {
-			var parser = document.createElement('a');
-			parser.href = Rvk.config.json.url;
-
-			parser.pathname = 'api/v1/init';
-			console.log(parser.href);
-
 			$.ajax({
 				type: 'POST',
-				url: parser.href,
+				url: 'api/v1/init',
 				xhrFields: {
 					withCredentials: true
 				},
