@@ -39,7 +39,7 @@ to start with local copy of the xml file type
 in order to install via node's package manager [npm][4] you need access to the [UBL's package registry][5].
 as root do 
 
-	npm --registry http://docker.ub.intern.uni-leipzig.de/npm/ install -g ervauka
+	npm --registry https://docker.ub.intern.uni-leipzig.de/npm/ install -g ervauka
 
 #### start the service
 
@@ -68,13 +68,13 @@ to use this service in your website and you have to set up your html-code as fol
  * add jquery
  * add jquery-ui
  * add ervauka.js, eg localhost:3000/ervauka.js
- * add script initiation accordingly to localhost:3000/index.html
+ * add script initiation according to public/index.html
 
 		var options = {
 			speed: 200, 					# optional, the milliseconds for animation effects
 			json: {							# required, describes the url and path to use for querying the ervauka service   
+				baseUrl: 'https://api.host',	# required, the path to the 'getchilds' REST call of ervauka service
 				func: rvk_init,				# optional, the function to use to query the ervauka service and build the html elements
-				url: '/api/v1/getchilds',	# required, the path to the 'getchilds' REST call of ervauka service
 				params: {					# optional, describes the params sent to ervauka service
 					depth: 0				# optional, the dimensional depth the children are collected and returned
 				}
@@ -84,10 +84,14 @@ to use this service in your website and you have to set up your html-code as fol
 			eventHandler: toggle,			# optional, which event handler shall react on event trigger
 			root: '#rvk-tree',				# optional, defines the jquery-id of the element that holds the rvk tree
 			bcroot: '#rvk-breakcrumb',		# optional, defines the jquery-id of the element that holds the breadcrumbs
-		}
-	
-		Rvk.setConfig(options)
-
+			notationsToHide: ['B', 'K']		# optional, the notations which shall be hidden
+		};
+		
+		Rvk.setConfig(options);
+		
+		var browseType = tree;				# required, has to be one of 'tree' or 'slide'
+		
+		Rvk.init(browseType);
 
 [1]: http://rvk.uni-regensburg.de/
 [2]: http://nodejs.org/

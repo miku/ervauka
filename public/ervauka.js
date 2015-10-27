@@ -84,19 +84,17 @@ var Rvk = (function ($) {
 
 	var Breadcrumb = (function () {
 
-		var _parent, _prepend;
+		var _parent;
 
 		var _init = function () {
-			Rvk.config.breadcrumbroot.html('<span>alles unter: </span><div></div>');
+			Rvk.config.breadcrumbroot.html('<span>alles unter: </span><ul></ul>');
 		};
 
 		var _getParent = function (id) {
-			if (Rvk.config.breadcrumbroot.find('div[name="' + id + '"]').length) {
-				_parent = Rvk.config.breadcrumbroot.find('div[name="' + id + '"]');
-				_prepend = ' > ';
+			if (Rvk.config.breadcrumbroot.find('ul[name="' + id + '"]').length) {
+				_parent = Rvk.config.breadcrumbroot.find('ul[name="' + id + '"]');
 			} else {
 				_parent = Rvk.config.breadcrumbroot;
-				_prepend = '';
 			}
 		};
 
@@ -107,11 +105,11 @@ var Rvk = (function ($) {
 			var notation = a.find('span[name="notation"]').text();
 			var title = a.find('span[name="title"]').text();
 
-			var breadcrumb = '<div class="rvk-breadcrumb" name="' + id + '" title="' + title + '"><span>' + _prepend + '</span><a href="#" rel="' + id + '">' + notation + '</a><div></div></div>';
+			var breadcrumb = '<ul class="rvk-breadcrumb" name="' + id + '" title="' + title + '"><li><a href="#" rel="' + id + '">' + notation + '</a><ul></ul></li></ul>';
 
-			_parent.find("div").replaceWith(breadcrumb);
+			_parent.find("ul").replaceWith(breadcrumb);
 
-			_parent.find("div").find("a").bind('click', breadcrumbHandler);
+			_parent.find("li").find("a").bind('click', breadcrumbHandler);
 
 			Rvk.active.id = id;
 			Rvk.active.notation = notation;

@@ -55,21 +55,17 @@ module.exports = function (grunt) {
 				}
 			}
 		},
-		apidoc: {
-			ervauka: {
-				src:'routes/',
-				dest: 'apidoc/'
+		uglify: {
+			options: {
+				banner: '/*! <%= pkg.name %> - v<%= pkg.version %> - ' +
+				'<%= grunt.template.today("yyyy-mm-dd") %> */'
+			},
+			public: {
+				files: {
+					'public/ervauka.min.js': ['public/ervauka.js']
+				}
 			}
-		},
-        docker_io: {
-            options: {
-                dockerFileLocation: '.',
-                buildName: 'useltmann/ervauka',
-                tag: 'latest',
-                username: 'useltmann',
-                push: false
-            }
-        }
+		}
 	});
 
 	grunt.config.requires('watch.server.files');
@@ -94,5 +90,9 @@ module.exports = function (grunt) {
 	grunt.registerTask('default', [
 		'develop',
 		'watch'
+	]);
+
+	grunt.registerTask('build', [
+		'uglify'
 	]);
 };
