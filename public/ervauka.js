@@ -66,7 +66,7 @@ var Rvk = (function ($) {
 		var _init = function(cb) {
 			$.ajax({
 				type: 'POST',
-				url: 'api/v1/init',
+				url: Rvk.config.json.baseUrl + 'api/v1/init',
 				xhrFields: {
 					withCredentials: true
 				},
@@ -140,7 +140,7 @@ var Rvk = (function ($) {
 		};
 
 		var _addBranch = function (parent_element, id) {
-			Rvk.config.json.func(id, Rvk.config.json.url, Rvk.config.json.params, function (data) {
+			Rvk.config.json.func(id, Rvk.config.json.baseUrl, Rvk.config.json.params, function (data) {
 				$(parent_element).find('.start').html('');
 				$(parent_element).removeClass('wait').append(data);
 
@@ -232,7 +232,7 @@ var Rvk = (function ($) {
 		};
 
 		var _replaceList = function (id, direction) {
-			Rvk.config.json.func(id, Rvk.config.json.url, Rvk.config.json.params, function (data) {
+			Rvk.config.json.func(id, Rvk.config.json.baseUrl, Rvk.config.json.params, function (data) {
 				if (direction == undefined) {
 					var from = "right";
 					var to = "left";
@@ -316,7 +316,7 @@ var Rvk = (function ($) {
 	};
 })(jQuery);
 
-function rvk_init(id, url, params, process) {
+function rvk_init(id, baseUrl, params, process) {
 	if (id !== null) {
 		params.notation_id = id
 	} else {
@@ -325,7 +325,7 @@ function rvk_init(id, url, params, process) {
 
 	$.ajax({
 		type: 'POST',
-		url: url,
+		url: baseUrl + 'api/v1/getchilds',
 		xhrFields: {
 			withCredentials: true
 		},
