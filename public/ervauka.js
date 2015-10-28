@@ -87,7 +87,7 @@ var Rvk = (function ($) {
 		var _parent;
 
 		var _init = function () {
-			Rvk.config.breadcrumbroot.html('<span>alles unter: </span><ul></ul>');
+			Rvk.config.breadcrumbroot.append('<ul></ul>');
 		};
 
 		var _getParent = function (id) {
@@ -158,7 +158,7 @@ var Rvk = (function ($) {
 		};
 
 		var _bindClickHandler = function (parent_element, parent_id) {
-			$(parent_element).find('LI A').bind(Rvk.config.eventType, function () {
+			$(parent_element).find('LI A').bind(Rvk.config.eventType, function (test) {
 
 				var active = $(this).hasClass('active') ? true : false;
 
@@ -187,8 +187,11 @@ var Rvk = (function ($) {
 				} else {
 					$(this).addClass('active');
 					var click = $(this);
-					Breadcrumb.add($(this), parent_id, function () {
-						click.trigger('click');
+					Breadcrumb.add($(this), parent_id, function (event) {
+						if (!event.isPropagationStopped()) {
+							event.stopPropagation();
+							click.trigger('click');
+						}
 						return false;
 					});
 				}

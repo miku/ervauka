@@ -5,6 +5,8 @@
 our private jenkins-server located at 172.18.85.101 has a job configured which will build, test and publish the package to
 the private registry, so you should leave the package-publishing step to jenkins. 
 
+how the npm-package is created is only here for documentation purposes. you should always rely on the jenkins job.
+
 ## npm-package
 
 The registry is located (here)[1]. First you have to register according to (this documentation)[2]. Now you can update
