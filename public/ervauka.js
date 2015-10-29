@@ -11,7 +11,7 @@ var Rvk = (function ($) {
 		eventType: 'click',
 		root: '#rvk-tree',
 		breadcrumbroot: '#rvk-breadcrumb',
-		notationsToHide: []
+		blacklist: []
 	};
 
 	var active = {
@@ -72,7 +72,7 @@ var Rvk = (function ($) {
 				},
 				crossDomain: true,
 				dataType: 'json',
-				data: {notationsToHide: Rvk.config.notationsToHide},
+				data: {blacklist: Rvk.config.blacklist},
 				success: cb
 			});
 		};
