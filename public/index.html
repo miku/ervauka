@@ -16,7 +16,7 @@
 	<form method="get" action="" name="searchForm" id="searchForm">
 		<input type="hidden" name="notation" id="rvk-notation" value=""/>
 		<input type="hidden" name="xpath" id="rvk-xpath" value=""/>
-		<input style="float:right" type="submit" name="submit" value="anzeigen"/>
+		<input style="float:right" type="submit" name="submit" value="anzeigen" disabled />
 	</form>
 	<div class="rvkSearchContent" style="clear:both">
 		<div id="rvk-tree">
@@ -41,7 +41,7 @@
 		eventHandler: toggle,
 		root: '#rvk-tree',
 		breadcrumbroot: '#rvk-breadcrumb',
-		notationsToHide: [
+		blacklist: [
 			'MX - MZ',
 			'P',
 			'Q',
@@ -87,6 +87,13 @@
 	function toggle(data) {
 		$("#rvk-notation").val('"'+data.notation+'"');
 		$("#rvk-xpath").val(data.id);
+
+		if (data.notation === '') {
+			$('#searchForm').find('.button').attr('disabled', true);
+		} else {
+			var button = $('#searchForm').find('.button');
+			button.attr('disabled', false);
+		}
 	}
 
 </script>

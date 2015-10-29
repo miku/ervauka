@@ -8,9 +8,9 @@ var query = require('../lib/rvk').Query;
 router.post('/getchilds', function(req, res, next) {
 	var id = (!req.body.notation_id || req.body.notation_id === 'null') ? undefined : req.body.notation_id;
 	var depth = parseInt(req.body.depth) || 0;
-	var notationsToHide = req.session.notationsToHide || [];
+	var blacklist = req.session.blacklist || [];
 
-	query(notationsToHide).getChildTree(id, depth).then(function(data) {
+	query(blacklist).getChildTree(id, depth).then(function(data) {
 		res.send({
 			data: data,
 			status: 'OK'
@@ -23,8 +23,8 @@ router.post('/getchilds', function(req, res, next) {
 
 router.post('/init', function(req, res, next) {
 	debug('init session');
-	req.session.notationsToHide = req.body.notationsToHide || [] ;
-	res.json(req.session.notationsToHide);
+	req.session.blacklist = req.body.blacklist || [] ;
+	res.json(req.session.blacklist);
 });
 
 module.exports = router;

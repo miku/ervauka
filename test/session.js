@@ -22,7 +22,7 @@ describe('session handling', function() {
 		it ('should hide the notation "Antike Welt"', function(done) {
 			agent
 				.post('/api/v1/init')
-				.send({notationsToHide: ['AA 09900']})
+				.send({blacklist: ['AA 09900']})
 				.expect(200)
 				.end(function (err, res) {
 					if (err) return done(err);
