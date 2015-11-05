@@ -1,63 +1,63 @@
 # Ervauka
 
-Ervauka is a service app which provides a simple api for browsing the RVK notation hierarchy.
+Ervauka is a service app which provides a simple API for browsing the RVK notation hierarchy.
 
-In order to use you need the XML file that contains the hierarchy structure of the categorisation and which is handed out
-by the University of Regensburg
+In order to use it, you'll need the XML file that contains the hierarchy structure of the categorisation and which is handed out
+by the University of Regensburg.
 
-for further information read [here][1]
+For further information read [here][1].
 
 ## Prerequisites
 
 ### nodejs
 
-The application is written in JavaScript and makes use of [nodejs][2]. So first you have to install this peace of software.
+The application is written in JavaScript and makes use of [nodejs][2]. So first you have to install this piece of software.
 Please refer to the projects documentation on how to do this for your running operating system.
 
 ## Installation
 
 ### via source code
 
-the project is open source and therefore hosted on [github.com][3]. To checkout type
+The project is open source and therefore hosted on [github.com][3]. To checkout type
  
-	git clone https://github.com/
+	git clone https://github.com/useltmann/ervauka.git
 
 #### install dependencies
 
-change into the applications folder and type
+Change into the applications folder and type:
 
 	npm install
 
 #### start the service
 
-to start with local copy of the xml file type
+To start with local copy of the xml file type:
 
 	node bin/ervauka file:///path/to/rvk.xml
 
 ### via npm
 
-in order to install via node's package manager [npm][4] you need access to the [UBL's package registry][5].
-as root do 
+In order to install via node's package manager [npm][4] you need access to the [UBL's package registry][5].
+As root do
 
 	npm --registry https://docker.ub.intern.uni-leipzig.de/npm/ install -g ervauka
 
 #### start the service
 
-to start the service type
+To start the service type:
 
 	ervauka file:///path/to/rvk.xml
 
 ## provide the service with the RVK-XML
 
-to start with local copy of the xml file type
+To start with local copy of the xml file type:
 
 	ervauka file:///path/to/rvk.xml
 
-or with a remote location accessable with http or https type
+or with a remote location accessable with http or https type:
 
 	ervauka http://remote.host/providing/rvk.xml
 
-alternatively you can provide the location by an environment variable 'URI'
+Alternatively you can provide the location by an environment variable 'URI'
 
 	URI=file://$(pwd)/rvk.xml ervauka
  
@@ -67,7 +67,7 @@ to use this service in your website and you have to set up your html-code as fol
 
  * add jquery
  * add jquery-ui
- * add ervauka.js, eg localhost:3000/ervauka.js
+ * add ervauka.js, e.g. localhost:3000/ervauka.js
  * add script initiation according to public/index.html
 
 		var options = {
